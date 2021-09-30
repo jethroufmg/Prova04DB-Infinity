@@ -1,5 +1,11 @@
 CREATE DATABASE lojinha;
 
+CREATE TABLE lojinha.categorias (
+	CodCategoria INT auto_increment,
+    CatNome VARCHAR (35)  UNIQUE NOT NULL,
+    primary key (CodCategoria)
+    );
+    
 CREATE TABLE lojinha.produtos (
 	CodProduto VARCHAR(10) UNIQUE NOT NULL,
     NomeProduto VARCHAR(55) NOT NULL,
@@ -9,13 +15,6 @@ CREATE TABLE lojinha.produtos (
     CodCategoria INT NOT NULL,
     primary key (CodProduto),
     foreign key (CodCategoria) REFERENCES categorias (CodCategoria)
-    );
-
-
-CREATE TABLE lojinha.categorias (
-	CodCategoria INT auto_increment,
-    CatNome VARCHAR (35)  UNIQUE NOT NULL,
-    primary key (CodCategoria)
     );
 
 CREATE TABLE lojinha.usuarios (
@@ -33,8 +32,7 @@ INSERT INTO lojinha.categorias
 	('Materiais Elétricos'),
 	('Materiais Hidráulicos'),
 	('Materias de pintura');
-    
-    
+        
 INSERT INTO lojinha.usuarios 
 	(UserEmail, UserNome) VALUES 
     ('ANAC@gmail.com' , 'ANA CARLA JESUS DOS SANTOS '),
@@ -127,11 +125,6 @@ INSERT INTO lojinha.carrinho
 	('ademario@mmedeiros.com.br', '85381000', 3),
 	('ademario@mmedeiros.com.br', '85381001', 1);
     
-CREATE VIEW lojinha.Pedido AS
-	SELECT p.NomeProduto, p.DescProduto, c.CatNome FROM lojinha.produtos p
-    INNER JOIN lojinha.categorias c on p.CodCategoria = c.CodCategoria;
-
-DROP VIEW lojinha.Pedido;
 
 CREATE VIEW lojinha.Pedido AS
 	SELECT car.UserEmail AS 'LOGIN', u.UserNome AS 'COMPRADOR', p.NomeProduto AS 'PRODUTO', p.DescProduto AS 'DESCRIÇÃO DO PRODUTO', c.CatNome AS 'CATEGORIA DO PRODUTO', car.QtdeProduto AS 'QTD EDO PEDIDO' FROM lojinha.carrinho car
